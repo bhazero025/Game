@@ -61,3 +61,11 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Database
+*.db
+
+#Eclipse stuff
+*.classpath
+*.project
+*.prefs
