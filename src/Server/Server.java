@@ -42,7 +42,6 @@ public class Server
 		
 		//TerrainPlayer p = new TerrainPlayer(6, 3);
 		//World.getWorld().overwriteTerrain(p);
-		
 		for (int i = 0; i < World.size; i++)
 		{
 			for (int j = 0; j < World.size; j++)

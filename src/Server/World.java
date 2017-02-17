@@ -39,17 +39,26 @@ public class World
 			for (int j = 0; j < size; j++, id++)
 			{
 				Random rnd = new Random();
-				int randomVal = rnd.nextInt(TerrainData.Resource.values().length);
+				int randomVal = rnd.nextInt(10);
 				
+			
 				switch(randomVal)
 				{
 				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:					
+				case 5:
 					terrain[i][j] = new Terrain(id);
 					break;
-				case 1:
-					terrain[i][j] = new TerrainWater(id);
+				case 6:
+				case 7:
+				case 8:
+					terrain[i][j] = new TerrainWater(id, 50);
 					break;
-				case 2:
+				case 9:
+				case 10:
 					terrain[i][j] = new TerrainWood(id);
 					break;
 				}
