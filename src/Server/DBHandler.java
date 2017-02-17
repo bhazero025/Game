@@ -5,6 +5,8 @@ import java.util.Random;
 
 import Account.UserAccount;
 import Player.Unit;
+import Player.UnitSoldier;
+import Player.UnitWorker;
 import Server.TerrainData.TerrainType;
 
 public class DBHandler 
@@ -15,7 +17,8 @@ public class DBHandler
 
 		//DBHandler.createLoginTable();
 		//DBHandler.createNewAccount("brunoUser", "brunoPass");
-		UserAccount u = DBHandler.getLogin("brunoUser", "brunoPass");
+		//UserAccount u = DBHandler.getLogin("brunoUser", "brunoPass");
+		//u.debugMe();
 		
 	}
 	
@@ -353,19 +356,40 @@ public class DBHandler
 	    	  String[] bufTOwned = tOwned.split(",");
 	    	  String[] bufUnits = units.split(",");
 	    	  
-	    	  ArrayList<Unit> uList = new ArrayList<>();
 	    	  ArrayList<Terrain> tList = new ArrayList<>();
-	    	  
+	    	  ArrayList<Unit> uList = new ArrayList<>();
+	
 	    	  //Add data to the lists
 	    	  for (String a : bufTOwned)
 	    	  {
-	    		  System.out.println(a);
+	    		  if (!a.equals("-1"))
+	    		  {
+	    			  tList.add(World.getWorld().getTerrainById(Integer.parseInt(a)));
+	    		  }
 	    	  }
-	    	  System.out.println("stop");
-	    	  for (String b : bufUnits)
+	    	
+	    	  
+	    	  for (int i = 0; i < bufUnits.length; i++)
 	    	  {
-	    		  System.out.println(b);
+	    		  switch(i)
+	    		  {
+	    		  case 0:
+	    			  for (int cc = 0; cc < Integer.parseInt(bufUnits[i]); cc++)
+	    			  {
+	    				  uList.add(new UnitWorker()); 
+	    			  }
+	    			  break;
+	    		  case 1:
+	    			  for (int cc = 0; cc < Integer.parseInt(bufUnits[i]); cc++)
+	    			  {
+	    				  uList.add(new UnitSoldier()); 
+	    			  }
+	    			  break;
+	    		  }
 	    	  }
+
+	    	  buffer = new UserAccount(id, Integer.parseInt(tBase), uList, tList);
+	    	  buffer.setUsername(username);
 	    	  
 	      }
 	      rs.close();
