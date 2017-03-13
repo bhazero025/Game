@@ -1,4 +1,4 @@
-package Player;
+package game.bruno.game.player;
 
 public class UnitWorker extends Unit 
 {

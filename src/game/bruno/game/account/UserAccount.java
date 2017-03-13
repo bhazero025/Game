@@ -1,9 +1,10 @@
-package Account;
+package game.bruno.game.account;
 
 import java.util.ArrayList;
 
-import Player.Unit;
-import Server.Terrain;
+import game.bruno.game.player.Unit;
+import game.bruno.game.server.*;
+
 
 public class UserAccount
 {
@@ -32,12 +33,12 @@ public class UserAccount
 	{
 		if(this.username != null)
 		{
-			System.out.println(this.username);
+			System.out.println("Username:" + this.username);
 		}
-		System.out.println(id);
-		System.out.println(unitList);
-		System.out.println(terrainOwned);
-		System.out.println(gold);
+		System.out.println("ID " + id);
+		System.out.println("unitList " + unitList);
+		System.out.println("terrainOwnded " + terrainOwned);
+		System.out.println("gold " + gold);
 	}
 	
 	public int getBase()
@@ -79,6 +80,7 @@ public class UserAccount
 		this.wood = wood;
 	}
 
+	//TODO: Add gold to the db
 	public void addGold(int gold)
 	{
 		this.gold += gold;

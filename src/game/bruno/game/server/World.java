@@ -1,4 +1,7 @@
-package Server;
+package game.bruno.game.server;
+
+
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -8,7 +11,7 @@ import java.util.Random;
  * A world
  *
  */
-public class World
+public class World implements Serializable
 {
 
 	final static int size = 10;

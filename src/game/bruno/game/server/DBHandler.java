@@ -1,13 +1,13 @@
-package Server;
+package game.bruno.game.server;
+
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Account.UserAccount;
-import Player.Unit;
-import Player.UnitSoldier;
-import Player.UnitWorker;
-import Server.TerrainData.TerrainType;
+import game.bruno.game.account.*;
+import game.bruno.game.player.*;
+
 
 public class DBHandler 
 {

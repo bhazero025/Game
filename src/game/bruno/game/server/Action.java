@@ -1,6 +1,6 @@
-package Server;
+package game.bruno.game.server;
 
-import Account.UserAccount;
+import game.bruno.game.account.UserAccount;
 
 public class Action 
 {
@@ -21,7 +21,7 @@ public class Action
 	 * @param minutes
 	 * @param terrainID
 	 */
-	public void startTimer(int minutes, int terrainID)
+	public void startTimer(int seconds, int terrainID)
 	{
 		Terrain t = World.getWorld().getTerrainById(terrainID);
 		if (t instanceof TerrainWater)
@@ -36,9 +36,9 @@ public class Action
 		{
 			System.err.println("ACTION: Terrain isn't wood or water");
 		}
-		gold *= minutes == 0 ? 1 : minutes;
+		gold *= seconds == 0 ? 1 : seconds;
 		this.startingTime = System.currentTimeMillis();
-		this.endTime = startingTime + (minutes * 60000);
+		this.endTime = startingTime + (seconds);
 		
 		//Add to ActionThread
 		ActionThread.actionList.add(this);

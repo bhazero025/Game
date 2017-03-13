@@ -1,8 +1,9 @@
-package Server;
+package game.bruno.game.server;
+
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import Account.UserAccount;
 
 /**
  * 
@@ -15,10 +16,13 @@ public class Server
 	
 	private int port;
 	private ServerSocket ss;
+	private Thread connectionWorker;
+	public static Thread openConnections;
 	
 	
 	public static void main(String[] args)
 	{
+	
 		new Server(25801).start();
 	}
 	
@@ -29,9 +33,13 @@ public class Server
 	
 	public void start()
 	{
+		openConnections = new Thread(OpenConnectionHandler.getInstance());
+		openConnections.start();
 		try 
 		{
 			this.ss = new ServerSocket(this.port);
+			connectionWorker = new Thread(new ServerConnectionWorker(ss));
+			connectionWorker.start();
 		} 
 		catch (IOException e)
 		{
@@ -47,7 +55,7 @@ public class Server
 		//DBHandler.addWorldToDatabase(World.getWorld());
 		World.getWorld().loadWorld();
 		
-		UserAccount u = DBHandler.getLogin("brunoUser", "brunoPass");
+		/*UserAccount u = DBHandler.getLogin("brunoUser", "brunoPass");
 		u.debugMe();
 		
 		Action testAction = new Action(u);
@@ -56,7 +64,7 @@ public class Server
 		Action testAction2 = new Action(u);
 		testAction2.startTimer(2,3);
 		
-		
+		*/
 		//TODO CONTINUE
 
 		//TerrainPlayer p = new TerrainPlayer(6, 3);

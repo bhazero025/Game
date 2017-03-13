@@ -1,4 +1,4 @@
-package Server;
+package game.bruno.game.server;
 
 
 public class TerrainPlayer extends Terrain

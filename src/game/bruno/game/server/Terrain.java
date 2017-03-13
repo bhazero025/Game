@@ -1,4 +1,5 @@
-package Server;
+package game.bruno.game.server;
+
 
 /**
  * 
