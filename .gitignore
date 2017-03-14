@@ -69,3 +69,15 @@ $RECYCLE.BIN/
 *.classpath
 *.project
 *.prefs
+
+#android studio
+*.iml
+.gradle
+AndroidSource/Game/local.properties
+AndroidSource/Game/.idea/workspace.xml
+AndroidSource/Game/.idea/libraries
+.DS_Store
+AndroidSource/Game/build
+AndroidSource/Game/captures
+.externalNativeBuild
+
