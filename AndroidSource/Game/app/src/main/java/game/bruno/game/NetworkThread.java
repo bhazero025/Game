@@ -25,6 +25,11 @@ public class NetworkThread implements Runnable
     private Socket client;
     private long lastEchoCall;
 
+    /**
+     * Used on WorldFragment
+     */
+    public static volatile boolean worldUpdated = false;
+
     @Override
     public void run()
     {
@@ -33,6 +38,7 @@ public class NetworkThread implements Runnable
             try {
                 Log.w("SERVER", "Trying to log in");
                 client = new Socket("192.168.0.2", 25801);
+
 
                 Log.w("SERVER", "Client connection " + (client.isConnected() ? "true" : "false"));
                 Log.w("SERVER", "Connected");
@@ -58,6 +64,7 @@ public class NetworkThread implements Runnable
                 for (int i = 0; i < commandArrayList.size(); i++) {
                     try {
                         ObjectOutputStream oos = new ObjectOutputStream(client.getOutputStream());
+                        commandArrayList.get(i).addCommand(client.getInetAddress().toString());
                         oos.writeObject(commandArrayList.get(i));
                         System.out.println("Wrote command to server " + commandArrayList.get(i).getCommand());
                         commandArrayList.remove(i);
@@ -69,7 +76,7 @@ public class NetworkThread implements Runnable
                 if (client.getInputStream().available() != 0)
                 {
 
-
+                    Log.w("SERVER", "SERVER SEND AN OBJECT");
                     ObjectInputStream ois = new ObjectInputStream(client.getInputStream());
 
                     Object buffer = ois.readObject();
@@ -78,23 +85,21 @@ public class NetworkThread implements Runnable
                     {
                         World.setWorld(((World) buffer));
 
-                        for (int i = 0; i < World.size; i++)
-                        {
-                            for (int j = 0; j < World.size; j++)
-                            {
-                                System.out.println(World.getWorld().getTerrain(i, j));
-                            }
-                        }
+                        worldUpdated = true;
                     }
                     else if (buffer instanceof Command)
                     {
                         Command cBuffer = ((Command)buffer);
-                        Log.w("SERVER", cBuffer.getCommand().equals("echo") ? "Echo --Ignoring" : cBuffer.getCommand());
+                        Log.w("SERVER", cBuffer.getCommand().equals("echo") ? "" : cBuffer.getCommand());
 
                         ArrayList<String> commandList = cBuffer.toArrayList();
                         if (commandList.get(0).equals("loginError"))
                         {
                             MainActivity.createToast("Wrong Credentials");
+                        }
+                        else if (commandList.get(0).equals("creatingAccountError"))
+                        {
+                            MainActivity.createToast("Username already used");
                         }
 
                     }
@@ -102,7 +107,7 @@ public class NetworkThread implements Runnable
                     {
                         MainActivity.userAccount = ((UserAccount) buffer);
                         Log.w("SERVER", "UserAccount set");
-                        MainActivity.userAccount.debugMe();
+                        MainActivity.updateLogin();
                     }
 
 

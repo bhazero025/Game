@@ -81,3 +81,4 @@ AndroidSource/Game/build
 AndroidSource/Game/captures
 .externalNativeBuild
 
+AndroidSource/Game/.idea/*

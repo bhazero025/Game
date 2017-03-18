@@ -85,10 +85,23 @@ public class UserAccount implements Serializable
 	public void setWood(int wood) {
 		this.wood = wood;
 	}
+	
+	public int getID()
+	{
+		return this.id;
+	}
 
 	//TODO: Add gold to the db
 	public void addGold(int gold)
 	{
 		this.gold += gold;
 	}
+
+	@Override
+	public String toString() {
+		return "UserAccount [unitList=" + unitList + ", terrainOwned=" + terrainOwned + ", username=" + username
+				+ ", id=" + id + ", base=" + base + ", gold=" + gold + ", fish=" + fish + ", wood=" + wood + "]";
+	}
+	
+	
 }

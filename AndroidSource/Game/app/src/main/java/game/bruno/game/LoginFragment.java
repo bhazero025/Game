@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -17,9 +18,11 @@ public class LoginFragment extends Fragment
 {
 
     private Button login;
-    private Button password;
+    private Button createAccount;
     private EditText loginText;
     private EditText passwordText;
+    private EditText confirmPasswordText;
+    private TextView confirmPassword;
     private View view;
 
     public LoginFragment() {
@@ -44,6 +47,9 @@ public class LoginFragment extends Fragment
         login = (Button) view.findViewById(R.id.buttonLogin);
         loginText = (EditText) view.findViewById(R.id.usernameText);
         passwordText = (EditText) view.findViewById(R.id.passwordText);
+        createAccount = (Button) view.findViewById(R.id.buttonCreateAccount);
+        confirmPassword = (TextView) view.findViewById(R.id.confirmPassword);
+        confirmPasswordText = (EditText) view.findViewById(R.id.confirmPasswordText);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,8 +63,45 @@ public class LoginFragment extends Fragment
 
                 loginText.setText("");
                 passwordText.setText("");
+
+
             }
         });
+
+        createAccount.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if (confirmPassword.getVisibility()== View.INVISIBLE && confirmPasswordText.getVisibility() == View.INVISIBLE)
+                {
+                    confirmPassword.setVisibility(View.VISIBLE);
+                    confirmPasswordText.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    //Check if its the same password
+                    if (confirmPasswordText.getText().toString().equals(passwordText.getText().toString()))
+                    {
+                        //Send action to create account
+                        Command buffer = new Command();
+                        buffer.addCommand("createAccount");
+                        buffer.addCommand(loginText.getText().toString());
+                        buffer.addCommand(passwordText.getText().toString());
+                        NetworkThread.commandArrayList.add(buffer);
+                    }
+                    else
+                    {
+                        MainActivity.createToast("Passwords do not match");
+                        passwordText.setText("");
+                        confirmPasswordText.setText("");
+                    }
+                }
+
+            }
+        });
+
+
     }
 
 

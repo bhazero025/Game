@@ -49,7 +49,7 @@ public class OpenConnectionHandler implements Runnable
 		{
 			try 
 			{
-				System.out.println("Users online " + currentUsers.size());
+				//System.out.println("Users online " + currentUsers.size());
 				
 				for (int i = 0; i < currentUsers.size(); i++)
 				{
@@ -94,6 +94,7 @@ public class OpenConnectionHandler implements Runnable
 							
 							ObjectOutputStream obs = new ObjectOutputStream(currentUsers.get(i).getSocket().getOutputStream());
 							UserAccount account = DBHandler.getLogin(commandList.get(1), commandList.get(2));
+							System.out.println(account);
 							if (account != null)
 							{
 								obs.writeObject(account);
@@ -109,12 +110,38 @@ public class OpenConnectionHandler implements Runnable
 							System.out.println("Gave login info");
 							
 						}
+						else if (buffer.getCommand().contains("createAccount"))
+						{
+							ArrayList<String> commandList = buffer.toArrayList();
+							String login = commandList.get(1);
+							String pass = commandList.get(2);
+							String ip = commandList.get(3);
+							
+							UserAccount newAccount = DBHandler.createNewAccount(login, pass, ip);
+							ObjectOutputStream obs = new ObjectOutputStream(currentUsers.get(i).getSocket().getOutputStream());
+							
+							if (newAccount != null)
+							{
+								obs.writeObject(newAccount);
+							}
+							else
+							{
+								Command error = new Command();
+								error.addCommand("creatingAccountError");
+								System.out.println("Error creating account");
+								obs.writeObject(error);
+								
+							}
+							
+						}
 						else if (buffer.getCommand().contains("echo"))
 						{
 							System.out.println("Got echo from client");
 							//now we have to send an echo back to the client
 							
 						}
+						
+						
 					}
 					
 					//System.out.println("---Finished IP   " + currentUsers.get(i).getSocket().getInetAddress() + "---");

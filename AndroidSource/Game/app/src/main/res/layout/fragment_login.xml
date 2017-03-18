@@ -2,59 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/loginFragment"
     tools:context="game.bruno.game.LoginFragment">
 
-
-    <TextView
-        android:text="Login:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="57dp"
-        android:id="@+id/textView4" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Username"
-        android:ems="10"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/textView4"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="46dp"
-        android:id="@+id/usernameText" />
-
-    <TextView
-        android:text="Password:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/usernameText"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_marginTop="22dp"
-        android:id="@+id/textView5" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="Password"
-        android:ems="10"
-        android:layout_below="@+id/usernameText"
-        android:layout_toEndOf="@+id/textView5"
-        android:layout_marginTop="11dp"
-        android:id="@+id/passwordText" />
 
     <Button
         android:text="Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordText"
-        android:layout_alignStart="@+id/textView5"
-        android:layout_marginTop="64dp"
-        android:id="@+id/buttonLogin" />
+        android:id="@+id/buttonLogin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="29dp" />
 
     <Button
         android:text="Create Account"
@@ -63,6 +23,67 @@
         android:id="@+id/buttonCreateAccount"
         android:layout_alignBaseline="@+id/buttonLogin"
         android:layout_alignBottom="@+id/buttonLogin"
-        android:layout_alignEnd="@+id/passwordText" />
+        android:layout_alignStart="@+id/confirmPasswordText"
+        android:layout_marginStart="28dp" />
+
+    <TextView
+        android:text="Confirm\nPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirmPassword"
+        android:layout_alignBottom="@+id/confirmPasswordText"
+        android:layout_alignStart="@+id/textView5"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:id="@+id/confirmPasswordText"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/passwordText"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Username"
+        android:ems="10"
+        android:id="@+id/usernameText"
+        android:layout_alignBaseline="@+id/textView4"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Password:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/usernameText"
+        android:layout_alignStart="@+id/buttonLogin" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Password"
+        android:ems="10"
+        android:id="@+id/passwordText"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Login:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:id="@+id/textView4"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView5" />
 
 </RelativeLayout>

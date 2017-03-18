@@ -19,6 +19,7 @@ public class DBHandler
 		//DBHandler.createNewAccount("brunoUser", "brunoPass");
 		//UserAccount u = DBHandler.getLogin("brunoUser", "brunoPass");
 		//u.debugMe();
+		//DBHandler.createNewAccount("bruno", "bruno", "localhost");
 		
 	}
 	
@@ -278,8 +279,9 @@ public class DBHandler
 		return id;
 	}
 	
-	public static void createNewAccount(String login, String password)
+	public static UserAccount createNewAccount(String login, String password, String Ip)
 	{
+		UserAccount newAccount = null;
 		Connection c = null;
 	    Statement stmt = null;
 	    try {
@@ -301,8 +303,8 @@ public class DBHandler
 	    	  System.out.println("Creating account");
 	    	  stmt = c.createStatement();
 	    	  int openTerrain = findOpenTerrain();
-	    	  String sql = "INSERT INTO LOGIN (USERNAME, PASSWORD, TBASE, TOWNED, UNITS) " +
-	    			  		"VALUES ('"+ login +"', '" + password +"', '" + openTerrain +"','-1', '0,0,0,0');";
+	    	  String sql = "INSERT INTO LOGIN (USERNAME, PASSWORD, TBASE, TOWNED, UNITS, GOLD, CIP, CDATE, LLOGIN, IP) " +
+	    			  		"VALUES ('"+ login +"', '" + password +"', '" + openTerrain +"','-1', '0,0,0,0', 10, '"+Ip+"', '"+System.currentTimeMillis()+"', '0', '0');";
 	    	  System.out.println(sql);
 	    	  stmt.executeUpdate(sql);
 	    	  c.commit();
@@ -310,11 +312,13 @@ public class DBHandler
 	    	  //Now convert terrain to TerrainPlayer
 	    	  createAccountHelper(openTerrain, login);
 	    	  System.out.println("Created account sucesfully");
+	    	  newAccount = DBHandler.getLogin(login, password);
 	    	  
 	      }
 	      else
 	      {
-	    	  System.out.println("Username already used");  
+	    	  System.out.println("Username already used"); 
+	    	  return null;
 	      }
 	      
 	      rs.close();
@@ -324,6 +328,8 @@ public class DBHandler
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 	      System.exit(0);
 	    }
+	    
+	    return newAccount;
 
 	}
 	
@@ -418,9 +424,15 @@ public class DBHandler
 	                   "(ID INTEGER PRIMARY KEY      AUTOINCREMENT, " +
 	                   " USERNAME       TEXT     NOT NULL, " + 
 	                   " PASSWORD       TEXT     NOT NULL, " +
-	                   " TBASE          TEXT     NOT NULL, " +
-	                   " TOWNED         TEXT     NOT NULL, " +
-	                   " UNITS          TEXT     );";
+	                   " TBASE          TEXT     NOT NULL, " + //Terrrain Base
+	                   " TOWNED         TEXT     NOT NULL, " + //Terrains Owned (not base)
+	                   " UNITS          TEXT     NOT NULL, " +
+	                   " GOLD           INTEGER  NOT NULL, " +
+	                   " CIP            TEXT     NOT NULL, " + //Creation IP
+	                   " CDATE          TEXT     NOT NULL, " + //Creation Date
+	                   " LLOGIN         TEXT     NOT NULL, " + //Last login date
+	                   " IP             TEXT     NOT NULL );"; //IP
+	      
 	      
 	      stmt.executeUpdate(sql);
 	      stmt.close();
