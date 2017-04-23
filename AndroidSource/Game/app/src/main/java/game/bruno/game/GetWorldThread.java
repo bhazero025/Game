@@ -15,12 +15,23 @@ public class GetWorldThread implements Runnable
     public void run()
     {
         int count = 0;
-        while(!NetworkThread.worldUpdated)
-        {
-            Log.w("GetWorldThread", "IS THIS TAKING TOO LONG? " + count);
-            count++;
-        }
 
+        synchronized (this)
+        {
+            try {
+                Log.d("getWorldThread", "waiting()");
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        /*while(!NetworkThread.worldUpdated)
+        {
+            //Log.w("GetWorldThread", "IS THIS TAKING TOO LONG? " + count);
+            //count++;
+        }*/
+
+        Log.d("getWorldThread", "finished Waiting()");
         NetworkThread.worldUpdated = true;
 
 

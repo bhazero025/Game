@@ -12,7 +12,8 @@ import android.widget.TextView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccountInfoFragment extends Fragment {
+public class AccountInfoFragment extends Fragment
+{
 
     private View view;
 

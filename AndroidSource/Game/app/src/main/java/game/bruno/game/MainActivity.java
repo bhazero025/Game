@@ -1,5 +1,6 @@
 package game.bruno.game;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity
 {
 
     public static NetworkThread networkThread = new NetworkThread();
-    //TODO: FIX this ugly thing
-    public static android.content.Context context;
+
+    public static Context context;
     public static FragmentManager fragmentManager;
     private static LoginFragment loginFragment;
     private static WorldFragment worldFragment;
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity
     {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment frag = null;
 
         if (id == R.id.nav_camera)
         {
@@ -194,19 +196,19 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_gallery)
         {
-            worldFragment = new WorldFragment();
-            FragmentTransaction transition = fragmentManager.beginTransaction();
+            frag = new WorldFragment();
+            /*FragmentTransaction transition = fragmentManager.beginTransaction();
             transition.replace(R.id.content_main, worldFragment);
-            transition.commit();
+            transition.commit();*/
         }
         else if (id == R.id.nav_slideshow)
         {
-            accountInfoFragment = new AccountInfoFragment();
-            FragmentTransaction transition = fragmentManager.beginTransaction();
-            transition.replace(R.id.content_main, accountInfoFragment);
-            transition.commit();
-
+            frag = new AccountInfoFragment();
         }
+
+        FragmentTransaction transition = fragmentManager.beginTransaction();
+        transition.replace(R.id.content_main, frag);
+        transition.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -23,6 +23,7 @@ public class WorldFragment extends Fragment
 {
     private View view;
     private static TextView t;
+    public static GetWorldThread getWorldThread;
 
     public WorldFragment()
     {
@@ -60,10 +61,9 @@ public class WorldFragment extends Fragment
     public void onStart()
     {
         super.onStart();
-
-
-
     }
+
+
     private void setup()
     {
         Command askWorld = new Command();
@@ -76,7 +76,8 @@ public class WorldFragment extends Fragment
 
         //start GetWorldThread
         //So we don't hang when the user clicks on World
-        new Thread(new GetWorldThread()).start();
+        getWorldThread = new GetWorldThread();
+        new Thread(getWorldThread).start();
     }
 
 }

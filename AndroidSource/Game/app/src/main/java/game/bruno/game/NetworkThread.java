@@ -53,7 +53,8 @@ public class NetworkThread implements Runnable
 
         try
         {
-            while (true) {
+            while (true)
+            {
 
 
                 long currentTime = System.currentTimeMillis();
@@ -83,9 +84,16 @@ public class NetworkThread implements Runnable
 
                     if (buffer instanceof World)
                     {
-                        World.setWorld(((World) buffer));
+                        synchronized (WorldFragment.getWorldThread)
+                        {
+                            World.setWorld(((World) buffer));
 
-                        worldUpdated = true;
+                            //worldUpdated = true;
+                            Log.d("NetworkThread", "notifying World");
+
+                            WorldFragment.getWorldThread.notify();
+                        }
+
                     }
                     else if (buffer instanceof Command)
                     {
