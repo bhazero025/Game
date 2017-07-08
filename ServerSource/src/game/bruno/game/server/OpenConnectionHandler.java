@@ -16,7 +16,7 @@ public class OpenConnectionHandler implements Runnable
 {
 
 	private volatile static ArrayList<PlayerSocket> currentUsers = new ArrayList<>();
-	
+	private volatile static ArrayList<Socket> socketQueue = new ArrayList<>();
 	
 	private static OpenConnectionHandler singleton;
 	
@@ -30,13 +30,51 @@ public class OpenConnectionHandler implements Runnable
 		return singleton;
 	}
 	
+	protected static int getSocketQueueSize()
+	{
+		return socketQueue.size();
+	}
+	
+	protected static int getCurrentUsersOnline()
+	{
+		return currentUsers.size();
+	}
+	
 	private OpenConnectionHandler() 
 	{
 		
 	}
 
+	public void addPlayerSocketQueue(Socket s)
+	{
+		socketQueue.add(s);
+		System.out.println("Added socket to queue " + s);
+	}
 	
-	public void addPlayerSocket(Socket s)
+	/**
+	 * Updates the playerSocket array with new elements
+	 */
+	private void updatePlayerSocket()
+	{
+		//check if we have elements on the list
+		if (socketQueue.size() != 0)
+		{
+			//add all the sockets to the PlayerSocket array
+			for (int i = 0; i < socketQueue.size(); i++)
+			{
+				addPlayerSocket(socketQueue.get(i));
+				System.out.println("Added socket to PlayerSocket array " + socketQueue.get(i));
+			}
+			
+			//now remove all the elements from our socketQueue
+			for (int i = 0; i < socketQueue.size(); i++)
+			{
+				socketQueue.remove(i);
+			}
+		}
+	}
+	
+	private void addPlayerSocket(Socket s)
 	{
 		PlayerSocket buff = new PlayerSocket(s);
 		currentUsers.add(buff);
@@ -47,6 +85,7 @@ public class OpenConnectionHandler implements Runnable
 	{
 		while (true)
 		{
+			updatePlayerSocket();
 			try 
 			{
 				//System.out.println("Users online " + currentUsers.size());

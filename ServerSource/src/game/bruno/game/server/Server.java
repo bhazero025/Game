@@ -33,6 +33,7 @@ public class Server
 	
 	public void start()
 	{
+		System.out.println("Waiting for a connection");
 		openConnections = new Thread(OpenConnectionHandler.getInstance());
 		openConnections.start();
 		try 
@@ -45,6 +46,9 @@ public class Server
 		{
 			e.printStackTrace();
 		}
+		
+		//start scanner thread
+		new Thread(new ScannerThread()).start();
 		
 		//start ActionThread
 		Thread action = new Thread(new ActionThread());

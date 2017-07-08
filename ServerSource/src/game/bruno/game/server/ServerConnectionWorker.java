@@ -37,7 +37,7 @@ public class ServerConnectionWorker implements Runnable
 			try
 			{
 				cs = ss.accept();
-				OpenConnectionHandler.getInstance().addPlayerSocket(cs);
+				OpenConnectionHandler.getInstance().addPlayerSocketQueue(cs);
 				System.out.println("Added " + this.cs);
 				
 			} 
